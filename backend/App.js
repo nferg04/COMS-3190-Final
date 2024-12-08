@@ -3,6 +3,8 @@ var cors = require("cors");
 var fs = require("fs");
 var bodyParser = require("body-parser");
 var app = express();
+const multer = require("multer");
+var path = require('path');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -29,3 +31,20 @@ const storage = multer.diskStorage({
 app.listen(port, () => {
     console.log("App listening at http://%s:%s", host, port);
 });
+
+app.get("/dishes", async (req, res) => {
+    await client.connect();
+    console.log("Node connected successfully to GET MongoDB");
+
+    const query = {};
+    const results = await db
+    .collection("dishes")
+    .find(query)
+    .limit(100)
+    .toArray();
+    console.log(results);
+
+    res.status(200);
+    res.send(results);
+});
+
