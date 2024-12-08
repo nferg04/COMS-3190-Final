@@ -48,3 +48,6 @@ app.get("/dishes", async (req, res) => {
     res.send(results);
 });
 
+app.post("/dish", async (req, res) => {
+    await client.connect();
+});
