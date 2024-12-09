@@ -69,7 +69,7 @@ const AddDish = () => {
             alert("An error occurred :"+err)
         }
 
-
+    }
         return (
             <div className="container mt-4">
                 <h2 className="text-center">Add New Dish</h2>
@@ -84,7 +84,7 @@ const AddDish = () => {
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Dish type</label>
-                        <input type="text" className="form-control" value={dish} onChange={(e) => setType(e.target.value)} required />
+                        <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Restaurant</label>
@@ -110,5 +110,5 @@ const AddDish = () => {
             </div>
         );
     };
-}
+
     export default AddDish;
