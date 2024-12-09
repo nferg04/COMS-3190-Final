@@ -15,15 +15,11 @@ import { Container, Card, Col, Button, InputGroup, FormControl } from 'react-boo
 import { useForm } from "react-hook-form";
 
 import MyView from './information';
-
-
-
-
-
+import AddDish from './addDish';
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <div>
-      <MyView />
+      <AddDish />
     </div>
   );
