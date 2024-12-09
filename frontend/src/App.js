@@ -13,7 +13,9 @@ import CreateUser from "./CreateUser.js";
 function App() {
 
     const [dishes, setDishes] = useState([]);
+    const [savedDishes, setSavedDishes] = useState([]);
     const [user, setUser] = useState(null);
+    
 
     return(
         <Router>

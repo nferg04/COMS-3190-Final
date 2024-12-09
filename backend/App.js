@@ -58,6 +58,9 @@ app.get("/dishes", async (req, res) => {
 
 app.post("/dish", upload.single("image"), async (req, res) => {
     try {
+        await client.connect();
+        console.log("Node connected successfully to GET MongoDB");
+
         const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
         const newDocument = {
@@ -88,6 +91,8 @@ app.post("/dish", upload.single("image"), async (req, res) => {
 
 app.post("/login", async (req, res) => {
     try {
+        await client.connect();
+
         const { username, password } = req.body;
 
         if(!username || !password) {
@@ -98,20 +103,16 @@ app.post("/login", async (req, res) => {
         const results = await db.collection("users")
         .findOne(query);
         console.log("Results :", results);
-        if (err) {
-            console.error("Database error during login:", err);
-            return res.status(500).send({ error: "An error occurred in Query. Please try again." });
-        }
-        if (results.length === 0) {
+        if (results === null) {
             return res.status(401).send({ error: "Invalid username or password." });
         }
         // If there is not any error, respond with code and role
-        const { user } = results[0];
+        const { user } = results;
         res.status(200).send({ user });
     }
     catch (err) {
         // Handle synchronous errors
-        console.error("Error in GET /contact/login", err);
+        console.error("Error in POST /login", err);
         res.status(500).send({ error: "An unexpected error occurred in Login: " + err.message });
     }
 });
@@ -134,7 +135,7 @@ app.post("/user", async (req, res) => {
     const query = {username: req.body.username}
     const results = await db.collection("users")
     .findOne(query);
-    
+
     if(results == null) {
         const result = await db
         .collection("users")

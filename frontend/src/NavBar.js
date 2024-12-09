@@ -10,8 +10,14 @@ const NavBar = ({ user }) => {
                 <li className="nav-item">
                     <Link to="/" className="nav-link text-dark">Home</Link>
                 </li>
+                <li className="nav-item">
+                    <Link to="/dishes" className="nav-link text-dark">View Dishes</Link>
+                </li>
                 {user == null && (
                     <>
+                        <li className="nav-item">
+                            <Link to="/add-dish" className="nav-link text-dark">Add Dish</Link>
+                        </li>
                         <li className="nav-item">
                             <Link to="/login" className="nav-link text-dark">Login</Link>
                         </li>
@@ -20,12 +26,6 @@ const NavBar = ({ user }) => {
                         </li>
                     </>
                 )}
-                <li className="nav-item">
-                    <Link to="/dishes" className="nav-link text-dark">View Dishes</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/add-dish" className="nav-link text-dark">Add Dish</Link>
-                </li>
                 {user != null && (
                     <>
 
