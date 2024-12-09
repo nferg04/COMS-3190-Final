@@ -117,45 +117,33 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/user", async (req, res) => {
-    try{
         
-        console.log(req.body);
+    console.log(req.body);
 
-        const newDocument = {
-            "username": req.body.username,
-            "password": req.body.password
-        };
+    const newDocument = {
+        "username": req.body.username,
+        "password": req.body.password
+    };
 
-        console.log(newDocument);
+    console.log(newDocument);
 
-        if(!req.body.username || !req.body.password) {
-            return res.status(400).send({error: "Username and password are required." });
-        }
+    if(!req.body.username || !req.body.password) {
+        return res.status(400).send({error: "Username and password are required." });
+    }
 
-        //const query = {username: req.body.username}
-        //const results = await db.collection("users")
-        //.findOne(query);
-        //console.log("Results :", results);
-        // if (err) {
-        //     console.error("Database error during login:", err);
-        //     return res.status(500).send({ error: "An error occurred in Query. Please try again." });
-        // }
-        // if(results.length != 0) {
-        //     return res.status(400).send( { error: "Username already exists try something else." })
-        // }
-
-
-        results = await db
+    const query = {username: req.body.username}
+    const results = await db.collection("users")
+    .findOne(query);
+    
+    if(results == null) {
+        const result = await db
         .collection("users")
         .insertOne(newDocument);
 
         res.status(200);
-        res.send(results);
-
+        res.send(result);
     }
-    catch (err) {
-        // Handle synchronous errors
-        console.error("Error in POST /user", err);
-        res.status(500).send({ error: "An unexpected error occurred in user: " + err.message });
+    else {
+        return res.status(400).send( { error: "Username already exists try something else." })
     }
 });

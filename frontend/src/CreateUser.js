@@ -25,6 +25,10 @@ const CreateUser = ({ setUser }) => {
             }
             const { user }  = await response.json();
             setUser(user);
+
+            setUsername('');
+            setPassword('');
+            setError('');
         }
         catch (err) {
             console.log("Failed to log in. Please try again."+err);
