@@ -61,17 +61,18 @@ app.post("/dish", upload.single("image"), async (req, res) => {
         const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
         const newDocument = {
-            "id": req.body.id,
-            "name": req.body.name,
+            "dish": req.body.dish,
             "price": req.body.price,
-            "description": req.body.description,
-            "url": req.body.imageUrl
+            "type": req.body.type,
+            "restaurant": req.body.restaurant,
+            "location": req.body.location,
+            "url": imageUrl
         };
 
         console.log(newDocument);
         
         const results = await db
-        .collection("dish")
+        .collection("dishes")
         .insertOne(newDocument);
 
         res.status(200);
