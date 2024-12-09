@@ -48,3 +48,31 @@ app.get("/dishes", async (req, res) => {
     res.send(results);
 });
 
+app.post("/dish", upload.single("image"), async (req, res) => {
+    try {
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const newDocument = {
+            "id": req.body.id,
+            "name": req.body.name,
+            "price": req.body.price,
+            "description": req.body.description,
+            "url": req.body.imageUrl
+        };
+
+        console.log(newDocument);
+        
+        const results = await db
+        .collection("robot")
+        .insertOne(newDocument);
+
+        res.status(200);
+        res.send(results);
+        
+    } 
+    catch (err) {
+        // Handle synchronous errors
+        console.error("Error in POST /contact:", err);
+        res.status(500).send({ error: "An unexpected error occurred: " + err.message });
+        }
+});
