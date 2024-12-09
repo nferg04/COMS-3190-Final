@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./NavBar.js";
 import Dishes from "./Dishes.js";
+import AddDish from "./addDish.js";
 
 
 
@@ -22,6 +23,10 @@ function App() {
                             dishes = {dishes}
                             setDishes = {setDishes}
                         />}/>
+                        <Route path="/add-dish" element = {<AddDish
+                            dishes = {dishes}
+                            setDishes = {setDishes}
+                         />}/>
                     </Routes>
                 </div>
             </div>

@@ -8,6 +8,9 @@ var path = require('path');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
 
 const port = "8081";
 const host = "localhost";
@@ -27,6 +30,11 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
     }
 });
+const upload = multer({ storage: storage });
+
+if (!fs.existsSync("uploads")) {
+    fs.mkdirSync("uploads");
+}
 
 app.listen(port, () => {
     console.log("App listening at http://%s:%s", host, port);
@@ -63,7 +71,7 @@ app.post("/dish", upload.single("image"), async (req, res) => {
         console.log(newDocument);
         
         const results = await db
-        .collection("robot")
+        .collection("dish")
         .insertOne(newDocument);
 
         res.status(200);
@@ -72,7 +80,7 @@ app.post("/dish", upload.single("image"), async (req, res) => {
     } 
     catch (err) {
         // Handle synchronous errors
-        console.error("Error in POST /contact:", err);
+        console.error("Error in POST /dish:", err);
         res.status(500).send({ error: "An unexpected error occurred: " + err.message });
         }
 });
