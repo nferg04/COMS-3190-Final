@@ -9,8 +9,11 @@ const CreateUser = ({ setUser }) => {
     const handleCreate = async (e) => {
         try {
             e.preventDefault();
-            const response = await
-            fetch("http://localhost:8081/user", {
+
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("password", password);
+            const response = await fetch("http://localhost:8081/user", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", },
                 body: JSON.stringify({ username, password }),
