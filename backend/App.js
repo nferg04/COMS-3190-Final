@@ -72,7 +72,7 @@ app.get("/saved-dishes/:user_id", async (req, res) => {
 
     res.status(200);
     res.send(results);
-})
+});
 
 app.post("/dish", upload.single("image"), async (req, res) => {
     try {
@@ -165,4 +165,20 @@ app.post("/user", async (req, res) => {
     else {
         return res.status(400).send( { error: "Username already exists try something else." })
     }
+});
+
+app.post("/add-saved-dishes", async (req, res) => {
+    console.log(req.body);
+
+    const newDocument = {
+        "userId" : req.body.userId,
+        "dishId" : req.body.dishId
+    }
+
+    const result = await db
+    .collection("saved-dishes")
+    .insertOne();
+
+    res.status(200);
+    res.send(result);
 });

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Dishes = ({dishes, setDishes}) => {
@@ -30,11 +31,15 @@ const Dishes = ({dishes, setDishes}) => {
                     alt={dish.dish}
                     style={{ width: '100px', height: '100px', marginRight: '15px', objectFit: 'cover' }}
                 />
-            )}
+                )}
                 <div>
                     <strong>{dish.dish}</strong> - {dish.price}
                     <p>{dish.type}</p>
                 </div>
+                <div>
+                    <button></button>
+                </div>
+
             </li>
         ))}
         <ul className="list-group">
