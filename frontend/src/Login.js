@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Authentication = ({ setUser }) => {
+const Authentication = ({ setUserId }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -20,8 +20,10 @@ const Authentication = ({ setUser }) => {
                 setError(errorData.error);
                 return;
             }
-            const { user }  = await response.json();
-            setUser(user);
+            const data  = await response.json();
+            console.log(data[0]._id);
+            setUserId(data[0]._id);
+            
         }
         catch (err) {
             console.log("Failed to log in. Please try again."+err);
@@ -31,7 +33,7 @@ const Authentication = ({ setUser }) => {
     
     return (
         <div className="container mt-4">
-            <h2 className="text-center">Login</h2>
+            <h2 className="text-center">Login to your Account</h2>
             <form onSubmit={handleLogin}>
                 <div className="mb-3">
                     <label className="form-label">Username</label>

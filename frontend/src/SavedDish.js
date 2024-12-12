@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Dishes = ({savedDishes, setSavedDishes, user, setUser}) => {
+const SavedDishes = ({savedDishes, setSavedDishes, userId, setUserId}) => {
     useEffect(() => {
         const fetchDishes = async () => {
             try {
-                const response = await fetch("http://localhost:8081/saved");
+                const response = await fetch("http://localhost:8081/saved-dishes/user");
                 if (!response.ok) {
                     throw new Error("Failed to fetch dishes");
                 }
                 const data = await response.json();
-                setDishes(data);
+                setSavedDishes(data);
             } 
             catch (error) {
-                alert("There was an Error loading contacts "+error);
+                alert("There was an Error loading saved dishes " + error);
             }
         };
         fetchDishes();
@@ -22,11 +22,10 @@ const Dishes = ({savedDishes, setSavedDishes, user, setUser}) => {
 
     return ( <div className="container">
         <h2 className="text-center mt-4">Dish List</h2>
-        {dishes.map((dish) => (
+        {savedDishes.map((dish) => (
             <li key={dish._id} className="list-group-item d-flex align-items-center">
                 <div>
-                    <strong>{dish.dish}</strong> - {dish.price}
-                    <p>{dish.type}</p>
+                    Saved Dish Example
                 </div>
             </li>
         ))}
@@ -36,4 +35,4 @@ const Dishes = ({savedDishes, setSavedDishes, user, setUser}) => {
     );
 }
 
-export default Dishes;
+export default SavedDishes;

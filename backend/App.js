@@ -56,6 +56,24 @@ app.get("/dishes", async (req, res) => {
     res.send(results);
 });
 
+app.get("/saved-dishes/:user_id", async (req, res) => {
+    await client.connect();
+    console.log("Node connected successfully to GET MongoDB");
+
+    
+
+    const query = {}
+    const results = await db
+    .collection("saved-dishes")
+    .find(query)
+    .limit(100)
+    .toArray();
+    console.log(results);
+
+    res.status(200);
+    res.send(results);
+})
+
 app.post("/dish", upload.single("image"), async (req, res) => {
     try {
         await client.connect();
@@ -101,14 +119,16 @@ app.post("/login", async (req, res) => {
 
         const query = {username: username}
         const results = await db.collection("users")
-        .findOne(query);
+        .find(query)
+        .limit(1)
+        .toArray();
         console.log("Results :", results);
         if (results === null) {
             return res.status(401).send({ error: "Invalid username or password." });
         }
         // If there is not any error, respond with code and role
-        const { user } = results;
-        res.status(200).send({ user });
+        res.status(200);
+        res.send(results);
     }
     catch (err) {
         // Handle synchronous errors
