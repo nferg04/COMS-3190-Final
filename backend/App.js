@@ -167,18 +167,20 @@ app.post("/user", async (req, res) => {
     }
 });
 
-app.post("/add-saved-dishes", async (req, res) => {
+app.post("/add-saved-dish", async (req, res) => {
     console.log(req.body);
 
     const newDocument = {
         "userId" : req.body.userId,
         "dishId" : req.body.dishId
     }
+    console.log(newDocument);
 
     const result = await db
-    .collection("saved-dishes")
-    .insertOne();
+    .collection("saved_dishes")
+    .insertOne(newDocument);
 
+    console.log("Result: " + result);
     res.status(200);
     res.send(result);
 });

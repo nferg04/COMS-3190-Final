@@ -33,6 +33,8 @@ function App() {
                             setUserId = {setUserId}
                          />}/>
                         <Route path="/dishes" element = {<Dishes
+                            userId = {userId}
+                            setUserId = {setUserId}
                             dishes = {dishes}
                             setDishes = {setDishes}
                         />}/>

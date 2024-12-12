@@ -69,46 +69,45 @@ const AddDish = () => {
         }
     };
 
-    }
-        return (
-            <div className="container mt-4">
-                <h2 className="text-center">Add New Dish</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Dish Name</label>
-                        <input type="text" className="form-control" value={dish} onChange={(e) => setDish(e.target.value)} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Dish price</label>
-                        <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label className="form-label">Dish type</label>
-                        <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
-                    </div>
+    return (
+        <div className="container mt-4">
+            <h2 className="text-center">Add New Dish</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label className="form-label">Dish Name</label>
+                    <input type="text" className="form-control" value={dish} onChange={(e) => setDish(e.target.value)} required />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Dish price</label>
+                    <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
+                </div>
+                
+                <div className="mb-3">
+                    <label className="form-label">Dish type</label>
+                    <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
+                </div>
 
-                    <div className="mb-3">
-                        <label className="form-label">Restaurant</label>
-                        <input type="text" className="form-control" value={restaurant} onChange={(e) => setRestaurant(e.target.value)} required />
-                    </div>
+                <div className="mb-3">
+                    <label className="form-label">Restaurant</label>
+                    <input type="text" className="form-control" value={restaurant} onChange={(e) => setRestaurant(e.target.value)} required />
+                </div>
 
-                    <div className="mb-3">
-                        <label className="form-label">Location</label>
-                        <input type="text" className="form-control" value={location} onChange={(e) => setLocation(e.target.value)} required />
-                    </div>
+                <div className="mb-3">
+                    <label className="form-label">Location</label>
+                    <input type="text" className="form-control" value={location} onChange={(e) => setLocation(e.target.value)} required />
+                </div>
 
-                    <div className="mb-3">
-                        <label className="form-label">Dish Image</label>
-                        <input type="file" className="form-control" onChange={handleImageChange} />
-                        {preview && (<img src={preview} alt="Preview" className="mt-3" style={{ width: '100px', height: '100px', objectFit: 'cover' }} /> )}
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Add Dish
-                    </button>
-                </form>
-            </div>
-        );
-    };
+                <div className="mb-3">
+                    <label className="form-label">Dish Image</label>
+                    <input type="file" className="form-control" onChange={handleImageChange} />
+                    {preview && (<img src={preview} alt="Preview" className="mt-3" style={{ width: '100px', height: '100px', objectFit: 'cover' }} /> )}
+                </div>
+                <button type="submit" className="btn btn-primary">
+                    Add Dish
+                </button>
+            </form>
+        </div>
+    );
+};
 
 export default AddDish;
