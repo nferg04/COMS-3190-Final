@@ -146,8 +146,6 @@ app.post("/user", async (req, res) => {
         "password": req.body.password
     };
 
-    console.log(newDocument);
-
     if(!req.body.username || !req.body.password) {
         return res.status(400).send({error: "Username and password are required." });
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CreateUser = ({ setUser }) => {
+const CreateUser = ({ setUserId }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -23,22 +23,23 @@ const CreateUser = ({ setUser }) => {
                 setError(errorData.error);
                 return;
             }
-            const { user }  = await response.json();
-            setUser(user);
+            const data = await response.json();
+            setUserId(data.insertedId);
 
             setUsername('');
             setPassword('');
             setError('');
         }
         catch (err) {
-            console.log("Failed to log in. Please try again."+err);
-            setError("Failed to log in. Please try again. " + err);
+            console.log("Failed to sign-up. Please try again."+err);
+            setError("Failed to sign-up. Please try again. " + err);
         }  
     }
     
     return (
         <div className="container mt-4">
             <h2 className="text-center">Create A New User</h2>
+            <p>Your username must be unique. If the username you want already exists you will not be able to create an account and be asked to try again.</p>
             <form onSubmit={handleCreate}>
                 <div className="mb-3">
                     <label className="form-label">Username</label>

@@ -24,6 +24,13 @@ const Dishes = ({dishes, setDishes}) => {
         <h2 className="text-center mt-4">Dish List</h2>
         {dishes.map((dish) => (
             <li key={dish._id} className="list-group-item d-flex align-items-center">
+                {dish.url && (
+                <img
+                    src={`http://localhost:8081${dish.url}`}
+                    alt={dish.dish}
+                    style={{ width: '100px', height: '100px', marginRight: '15px', objectFit: 'cover' }}
+                />
+            )}
                 <div>
                     <strong>{dish.dish}</strong> - {dish.price}
                     <p>{dish.type}</p>

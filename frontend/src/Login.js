@@ -24,6 +24,10 @@ const Authentication = ({ setUserId }) => {
             console.log(data[0]._id);
             setUserId(data[0]._id);
             
+            setUsername('');
+            setPassword('');
+            setError('');
+            
         }
         catch (err) {
             console.log("Failed to log in. Please try again."+err);
