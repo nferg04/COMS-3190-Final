@@ -56,23 +56,46 @@ app.get("/dishes", async (req, res) => {
     res.send(results);
 });
 
-app.get("/saved-dishes/:user_id", async (req, res) => {
+app.get("/saved-dishes/:userId", async (req, res) => {
     await client.connect();
     console.log("Node connected successfully to GET MongoDB");
+    
+    const userId = req.params.userId;
 
     
-
-    const query = {}
+    const query = {userId: userId};
+    console.log(query);
     const results = await db
-    .collection("saved-dishes")
+    .collection("saved_dishes")
     .find(query)
-    .limit(100)
+    .limit(1000)
     .toArray();
+
     console.log(results);
 
     res.status(200);
     res.send(results);
 });
+
+app.get("/dish/:dishId", async (req,res) => {
+    await client.connect();
+    console.log("Inside find by dishes.");
+
+    const _id = req.params.dishId;
+
+    const query = {_id: _id};
+    console.log(query);
+    const results = await db
+    .collection("dishes")
+    .find(query)
+    .limit(100)
+    .toArray();
+
+    console.log("Results: " + results)
+
+    res.status(200);
+    res.send(results);
+})
 
 app.post("/dish", upload.single("image"), async (req, res) => {
     try {
@@ -118,6 +141,7 @@ app.post("/login", async (req, res) => {
         }
 
         const query = {username: username}
+        console.log(query);
         const results = await db.collection("users")
         .find(query)
         .limit(1)

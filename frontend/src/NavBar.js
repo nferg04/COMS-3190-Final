@@ -25,6 +25,9 @@ const NavBar = ({ user }) => {
                 <li className="nav-item">
                     <Link to="/saved-dish" className="nav-link text-dark">Saved Dishes</Link>
                 </li>
+                <li>
+                    <Link to="info" className="nav-link text-dark">About Us</Link>
+                </li>
             </ul>
         </div>
     );

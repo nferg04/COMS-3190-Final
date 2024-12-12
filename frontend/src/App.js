@@ -7,7 +7,7 @@ import AddDish from "./addDish.js";
 import Authentication from "./Login.js";
 import CreateUser from "./CreateUser.js";
 import SavedDishes from "./SavedDish.js";
-
+import MyView from "./information.js";
 
 
 
@@ -15,6 +15,7 @@ function App() {
 
     const [dishes, setDishes] = useState([]);
     const [savedDishes, setSavedDishes] = useState([]);
+    const [dishIds, setDishIds] = useState([]);
     const [userId, setUserId] = useState('');
     
 
@@ -47,7 +48,10 @@ function App() {
                             setSavedDishes = {setSavedDishes}
                             userId = {userId}
                             setUserId = {setUserId}
+                            dishIds = {dishIds}
+                            setDishIds = {setDishIds}
                          />}/>
+                         <Route path="info" element = {<MyView />}/>
                     </Routes>
                 </div>
             </div>
