@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Dishes = ({dishes, setDishes}) => {
@@ -25,21 +24,10 @@ const Dishes = ({dishes, setDishes}) => {
         <h2 className="text-center mt-4">Dish List</h2>
         {dishes.map((dish) => (
             <li key={dish._id} className="list-group-item d-flex align-items-center">
-                {dish.url && (
-                <img
-                    src={`http://localhost:8081${dish.url}`}
-                    alt={dish.dish}
-                    style={{ width: '100px', height: '100px', marginRight: '15px', objectFit: 'cover' }}
-                />
-                )}
                 <div>
                     <strong>{dish.dish}</strong> - {dish.price}
                     <p>{dish.type}</p>
                 </div>
-                <div>
-                    <button></button>
-                </div>
-
             </li>
         ))}
         <ul className="list-group">
