@@ -8,6 +8,9 @@ var path = require('path');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
 
 const port = "8081";
 const host = "localhost";
@@ -27,6 +30,11 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
     }
 });
+const upload = multer({ storage: storage });
+
+if (!fs.existsSync("uploads")) {
+    fs.mkdirSync("uploads");
+}
 
 app.listen(port, () => {
     console.log("App listening at http://%s:%s", host, port);
@@ -48,22 +56,44 @@ app.get("/dishes", async (req, res) => {
     res.send(results);
 });
 
+app.get("/saved-dishes/:user_id", async (req, res) => {
+    await client.connect();
+    console.log("Node connected successfully to GET MongoDB");
+
+    
+
+    const query = {}
+    const results = await db
+    .collection("saved-dishes")
+    .find(query)
+    .limit(100)
+    .toArray();
+    console.log(results);
+
+    res.status(200);
+    res.send(results);
+});
+
 app.post("/dish", upload.single("image"), async (req, res) => {
     try {
+        await client.connect();
+        console.log("Node connected successfully to GET MongoDB");
+
         const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
         const newDocument = {
-            "id": req.body.id,
-            "name": req.body.name,
+            "dish": req.body.dish,
             "price": req.body.price,
-            "description": req.body.description,
-            "url": req.body.imageUrl
+            "type": req.body.type,
+            "restaurant": req.body.restaurant,
+            "location": req.body.location,
+            "url": imageUrl
         };
 
         console.log(newDocument);
         
         const results = await db
-        .collection("robot")
+        .collection("dishes")
         .insertOne(newDocument);
 
         res.status(200);
@@ -72,7 +102,83 @@ app.post("/dish", upload.single("image"), async (req, res) => {
     } 
     catch (err) {
         // Handle synchronous errors
-        console.error("Error in POST /contact:", err);
+        console.error("Error in POST /dish:", err);
         res.status(500).send({ error: "An unexpected error occurred: " + err.message });
         }
+});
+
+app.post("/login", async (req, res) => {
+    try {
+        await client.connect();
+
+        const { username, password } = req.body;
+
+        if(!username || !password) {
+            return res.status(400).send({error: "Username and password are required." });
+        }
+
+        const query = {username: username}
+        const results = await db.collection("users")
+        .find(query)
+        .limit(1)
+        .toArray();
+        console.log("Results :", results);
+        if (results === null) {
+            return res.status(401).send({ error: "Invalid username or password." });
+        }
+        // If there is not any error, respond with code and role
+        res.status(200);
+        res.send(results);
+    }
+    catch (err) {
+        // Handle synchronous errors
+        console.error("Error in POST /login", err);
+        res.status(500).send({ error: "An unexpected error occurred in Login: " + err.message });
+    }
+});
+
+app.post("/user", async (req, res) => {
+        
+    console.log(req.body);
+
+    const newDocument = {
+        "username": req.body.username,
+        "password": req.body.password
+    };
+
+    if(!req.body.username || !req.body.password) {
+        return res.status(400).send({error: "Username and password are required." });
+    }
+
+    const query = {username: req.body.username}
+    const results = await db.collection("users")
+    .findOne(query);
+
+    if(results == null) {
+        const result = await db
+        .collection("users")
+        .insertOne(newDocument);
+
+        res.status(200);
+        res.send(result);
+    }
+    else {
+        return res.status(400).send( { error: "Username already exists try something else." })
+    }
+});
+
+app.post("/add-saved-dishes", async (req, res) => {
+    console.log(req.body);
+
+    const newDocument = {
+        "userId" : req.body.userId,
+        "dishId" : req.body.dishId
+    }
+
+    const result = await db
+    .collection("saved-dishes")
+    .insertOne();
+
+    res.status(200);
+    res.send(result);
 });

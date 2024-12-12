@@ -9,7 +9,6 @@ const AddDish = () => {
     const [location, setLocation] = useState('');
 
     const [preview, setPreview] = useState(null);
-
     const [image, setImage] = useState(null);
 
 
@@ -68,6 +67,7 @@ const AddDish = () => {
         catch (err) {
             alert("An error occurred :"+err)
         }
+    };
 
     }
         return (
@@ -82,21 +82,21 @@ const AddDish = () => {
                         <label className="form-label">Dish price</label>
                         <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
                     </div>
+                    
                     <div className="mb-3">
                         <label className="form-label">Dish type</label>
                         <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
                     </div>
+
                     <div className="mb-3">
                         <label className="form-label">Restaurant</label>
                         <input type="text" className="form-control" value={restaurant} onChange={(e) => setRestaurant(e.target.value)} required />
                     </div>
+
                     <div className="mb-3">
                         <label className="form-label">Location</label>
                         <input type="text" className="form-control" value={location} onChange={(e) => setLocation(e.target.value)} required />
                     </div>
-
-
-
 
                     <div className="mb-3">
                         <label className="form-label">Dish Image</label>
@@ -111,4 +111,4 @@ const AddDish = () => {
         );
     };
 
-    export default AddDish;
+export default AddDish;
